@@ -1,4 +1,4 @@
-Function GetFolder([string]$folderPath, $session)
+Function GetFolderByPath([string]$folderPath, $session)
 {
     $backslash = "\"
     
@@ -35,7 +35,7 @@ Function CopyAllAttachments([string]$folderPath, [string]$destination)
         return
     }
 
-    $trainingRecords = GetFolder $folderPath $session
+    $trainingRecords = GetFolderByPath $folderPath $session
 
     $folderItems = $trainingRecords.Items
     $currentMail = $null
