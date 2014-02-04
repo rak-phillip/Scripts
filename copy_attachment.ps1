@@ -22,7 +22,7 @@ Function GetFolder([string]$folderPath, $session)
     return $folder    
 }
 
-Function CopyAllAttachments([string]$folderPath)
+Function CopyAllAttachments([string]$folderPath, [string]$destination)
 {
     Add-Type -assembly "Microsoft.Office.Interop.Outlook"
 
@@ -45,7 +45,7 @@ Function CopyAllAttachments([string]$folderPath)
         if ($currentMail -ne $null) {
             if ($currentMail.Attachments.Count -gt 0) {
                 for ($i = 1; $i -le $currentMail.Attachments.Count; $i++) {
-                    $currentMail.Attachments.Item($i).SaveAsFile("D:\test\" + $currentMail.Attachments.Item($i).FileName);
+                    $currentMail.Attachments.Item($i).SaveAsFile($destination + $currentMail.Attachments.Item($i).FileName);
                 }
             }
         }
@@ -53,5 +53,6 @@ Function CopyAllAttachments([string]$folderPath)
 }
 
 $folderPath = "\\Public Folders\All Public Folders\Co:Training Records - (Unprocessed)"
+$destination = "D:\test\"
 
-CopyAllAttachments $folderPath
+CopyAllAttachments $folderPath $destination
