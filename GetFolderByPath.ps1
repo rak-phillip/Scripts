@@ -25,3 +25,4 @@ Function GetFolderByPath([string]$folderPath, $session)
 }
 
 GetFolderByPath $folderPath $session
+

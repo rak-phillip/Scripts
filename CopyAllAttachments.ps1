@@ -1,21 +1,10 @@
-Param ([string]$folderPath, [string]$destination)
+Param($outlookFolder, [string]$destination)
 
-Function CopyAllAttachments([string]$folderPath, [string]$destination)
+Function CopyAllAttachments($outlookFolder, [string]$destination)
 {
     Add-Type -assembly "Microsoft.Office.Interop.Outlook"
 
-    $session = New-Object -comobject Outlook.Application
-
-    $session.Version
-
-    if (!($session.Version -like "12.*" -or $session.Version -like "14.*")){
-        write-host "Requires 2007 or 2010"
-        return
-    }
-
-    $trainingRecords = .{.\GetFolderByPath $folderPath $session}
-
-    $folderItems = $trainingRecords.Items
+    $folderItems = $outlookFolder.Items
     $currentMail = $null
 
     foreach ($collectionitem in $folderItems) {
@@ -30,4 +19,4 @@ Function CopyAllAttachments([string]$folderPath, [string]$destination)
     }
 }
 
-CopyAllAttachments $folderPath $destination
+CopyAllAttachments $outlookFolder $destination
