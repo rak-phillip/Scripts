@@ -1,4 +1,4 @@
-Param([string]$folderPath, $session)
+Param([string]$folderPath, $session = 0)
 
 Function GetFolderByPath([string]$folderPath, $session)
 {
@@ -24,5 +24,16 @@ Function GetFolderByPath([string]$folderPath, $session)
     return $folder    
 }
 
-GetFolderByPath $folderPath $session
+if($session -eq 0){
+    #Start a new Outlook Session
+    $session = New-Object -comobject Outlook.Application
 
+    $session.Version
+
+    if (!($session.Version -like "12.*" -or $session.Version -like "14.*")){
+        write-host "Requires 2007 or 2010"
+        return
+    }
+}
+
+GetFolderByPath $folderPath $session

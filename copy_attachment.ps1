@@ -22,19 +22,21 @@
 #       . ##            . ##
 #------------------------------------------------------------------------------
 
-Param([string]$folderPath, [string]$destination, $session)
+Param([string]$folderPath, [string]$destination, $session=0)
 
 #$folderPath = "\\Public Folders\All Public Folders\Co:Training Records - (Unprocessed)"
 #$destination = "D:\test\"
 
-#Start a new Outlook Session
-$session = New-Object -comobject Outlook.Application
+if($session -eq 0){
+    #Start a new Outlook Session
+    $session = New-Object -comobject Outlook.Application
 
-$session.Version
+    $session.Version
 
-if (!($session.Version -like "12.*" -or $session.Version -like "14.*")){
-    write-host "Requires 2007 or 2010"
-    return
+    if (!($session.Version -like "12.*" -or $session.Version -like "14.*")){
+        write-host "Requires 2007 or 2010"
+        return
+    }
 }
 
 #Get the folder that has items with attachments
