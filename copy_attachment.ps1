@@ -2,10 +2,10 @@
 #      ####            ####
 #   ############   ############      
 # ################################    Author: Phillip Rak
-#|  ##############  ##############    Description: 
-#|      ##########      ##########   
-#|        ########        ########   
-#|        ########        ########   
+#|  ##############  ##############    Description: A script that searches for
+#|      ##########      ##########      a public folder in Outlook and writes
+#|        ########        ########      all of the attachments associated with
+#|        ########        ########      emails in the folder to a directory.
 #|        ########.       ########   
 #|        ######    * .   ########   
 #|        ##.           ##########       
@@ -24,7 +24,8 @@
 
 Param([string]$folderPath="", [string]$destination="", $session=0)
 
-#$folderPath = "\\Public Folders\All Public Folders\Co:Training Records - (Unprocessed)"
+#$folderPath = "\\Public Folders\All Public Folders\Co:Training Records - 
+#(Unprocessed)"
 #$destination = "D:\test\"
 
 #if the folderPath was not entered, cancel the script

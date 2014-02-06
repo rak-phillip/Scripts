@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------
+#      ####            ####
+#   ############   ############      
+# ################################    Author: Phillip Rak
+#|  ##############  ##############    Description: Get a public foder from 
+#|      ##########      ##########      Outlook that matches the path entered.
+#|        ########        ########     
+#|        ########        ########    
+#|        ########.       ########   
+#|        ######    * .   ########   
+#|        ##.           ##########       
+#|            * .   ##############                               
+#|                ################   
+#|                ################   
+#|                ################       
+#|        ##      ######  ########   
+#|        ######  ##      ########       
+#|        ########        ########   
+#|        ########        ########       
+# .       ########.       ########   
+#    .    ######     .    ###### 
+#       . ##            . ##
+#------------------------------------------------------------------------------
+
 Param([string]$folderPath, $session=0)
 
 Function GetFolderByPath([string]$folderPath, $session)
@@ -24,6 +48,7 @@ Function GetFolderByPath([string]$folderPath, $session)
     return $folder    
 }
 
+#if a session was not passed, start a new Outlook session
 if($session -eq 0){
     #Start a new Outlook Session
     $session = New-Object -comobject Outlook.Application
