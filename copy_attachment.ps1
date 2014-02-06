@@ -22,11 +22,24 @@
 #       . ##            . ##
 #------------------------------------------------------------------------------
 
-Param([string]$folderPath, [string]$destination, $session=0)
+Param([string]$folderPath="", [string]$destination="", $session=0)
 
 #$folderPath = "\\Public Folders\All Public Folders\Co:Training Records - (Unprocessed)"
 #$destination = "D:\test\"
 
+#if the folderPath was not entered, cancel the script
+if($folderPath -eq "") {
+    write-host "A Folder Path is required"
+    return
+}
+
+#if the destination was not entered, cancel the script
+if($destination -eq "") {
+    write-host "A destination is required"
+    return
+}
+
+#if the session is not assigned, create a new Outlook session
 if($session -eq 0){
     #Start a new Outlook Session
     $session = New-Object -comobject Outlook.Application
@@ -44,3 +57,5 @@ $outlookFolder = .{.\GetFolderByPath.ps1 $folderPath $session}
 
 #Copy all attachments from all items that contain attachments to a directory
 .{.\CopyAllAttachments.ps1 $outlookFolder $destination}
+
+write-host "Copied attachments to $destination"

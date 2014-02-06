@@ -1,4 +1,4 @@
-Param([string]$folderPath, $session = 0)
+Param([string]$folderPath, $session=0)
 
 Function GetFolderByPath([string]$folderPath, $session)
 {
