@@ -37,7 +37,6 @@ Function CopyAllAttachments($outlookFolder, [string]$destination)
             if ($currentMail.Attachments.Count -gt 0) {
                 for ($i = 1; $i -le $currentMail.Attachments.Count; $i++) {
                     $filePath = $destination + $currentMail.Attachments.Item($i).FileName
-                    Test-Path $filePath
                     if (Test-Path ($filePath)) {
                         write-host "The file" $currentMail.Attachments.Item($i).FileName "already exists"
                     }
