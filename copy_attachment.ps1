@@ -22,14 +22,17 @@
 #       . ##            . ##
 #------------------------------------------------------------------------------
 
-Param([string]$folderPath="", [string]$destination="", $session=0)
+Param([string]$outlookFolderPath="", [string]$destination="", $session=0)
 
-#$folderPath = "\\Public Folders\All Public Folders\Co:Training Records - 
-#(Unprocessed)"
-#$destination = "D:\test\"
+#get the directory of the running script
+function GetScriptDirectory
+{
+    $Invocation = (Get-Variable MyInvocation -Scope 1).Value
+    Split-Path $Invocation.MyCommand.Path
+}
 
-#if the folderPath was not entered, cancel the script
-if($folderPath -eq "") {
+#if the outlookFolderPath was not entered, cancel the script
+if($outlookFolderPath -eq "") {
     write-host "A Folder Path is required"
     return
 }
@@ -53,10 +56,36 @@ if($session -eq 0){
     }
 }
 
-#Get the folder that has items with attachments
-$outlookFolder = .{.\GetFolderByPath.ps1 $folderPath $session}
+#Get the folder that has items with attachments by running the GetFolderByPath
+#script
+$subScriptName = "GetFolderByPath.ps1"
+$subScriptPath = Join-Path (GetScriptDirectory) $subScriptName
 
-#Copy all attachments from all items that contain attachments to a directory
-.{.\CopyAllAttachments.ps1 $outlookFolder $destination}
+if (Test-Path $subScriptPath)
+{
+    # use file from local folder
+    $outlookFolder = . $subScriptPath $outlookFolderPath $session
+}
+else
+{
+    # use central file (via PATH-Variable)
+    $outlookFolder = . $subScriptName $outlookFolderPath $session
+}
+
+#Copy all attachments from all items that contain attachments to a directory by
+#running the CopyAllAttachments script
+$subScriptName = "CopyAllAttachments.ps1"
+$subScriptPath = Join-Path (GetScriptDirectory) $subScriptName
+
+if (Test-Path $subScriptPath)
+{
+    # use file from local folder
+    . $subScriptPath $outlookFolder $destination
+}
+else
+{
+    # use central file (via PATH-Variable)
+    . $subScriptName $outlookFolder $destination
+}
 
 write-host "Copied attachments to $destination"
