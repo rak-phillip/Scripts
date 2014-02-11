@@ -22,6 +22,9 @@
 #       . ##            . ##
 #------------------------------------------------------------------------------
 
+#*[string] outlookFolderPath the path to an Outlook folder 
+# e.g. \\Public Folders\Corporate Mail
+# [string] destination the directory for all attachments to be copied to
 Param([string]$outlookFolderPath="", [string]$destination="", $session=0)
 
 #get the directory of the running script

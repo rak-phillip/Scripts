@@ -22,17 +22,21 @@
 #       . ##            . ##
 #------------------------------------------------------------------------------
 
-Param([string]$folderPath, $session=0)
+#*[string] outlookFolderPath the path to an Outlook folder 
+# e.g. \\Public Folders\Corporate Mail
+# [object] session the outlook application object
+# returns folder object on success
+Param([string]$outlookFolderPath, $session=0)
 
-Function GetFolderByPath([string]$folderPath, $session)
+Function GetFolderByPath([string]$outlookFolderPath, $session)
 {
     $backslash = "\"
     
-    if ($folderPath.StartsWith("\\")) {
-        $folderPath = $folderPath.Remove(0, 2)
+    if ($outlookFolderPath.StartsWith("\\")) {
+        $outlookFolderPath = $outlookFolderPath.Remove(0, 2)
     }
 
-    $folders = $folderPath.Split($backslash.ToCharArray())
+    $folders = $outlookFolderPath.Split($backslash.ToCharArray())
     $folder = $session.Session.Folders.item($folders[0])
     
     if ($folder -ne $null) {
@@ -59,8 +63,8 @@ if($session -eq 0){
 
     if (!($session.Version -like "12.*" -or $session.Version -like "14.*")){
         write-host "Requires 2007 or 2010"
-        return
+        return $null
     }
 }
 
-GetFolderByPath $folderPath $session
+GetFolderByPath $outlookFolderPath $session

@@ -22,6 +22,9 @@
 #       . ##            . ##
 #------------------------------------------------------------------------------
 
+#*[string] outlookFolderPath the path to an Outlook folder 
+# e.g. \\Public Folders\Corporate Mail
+# [string] destination the directory for all attachments to be copied to
 Param($outlookFolder, [string]$destination)
 
 Function CopyAllAttachments($outlookFolder, [string]$destination)
