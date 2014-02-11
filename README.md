@@ -19,11 +19,23 @@ The script gets the desired Outlook folder by running the script
 GetFolderByPath.ps1 and copies all attachments to a directory by calling
 CopyAllAttachments.ps1.
 
-###GetFolderBypath.ps1
+Example:
+
+    PS D:\> $session = new-Object -comobject Outlook.Application
+    PS D:\> .\copy_attachment.ps1 -outlookFolderPath "\\Public Folders\All Public Folders\Group Mail" -destination D:\group_attachments\ -session $session
+    > Writing file 3_3_2013_12_26_40_22_5140.sig to D:\group_attachments\
+    > Copied attachments to D:\group_attachments\
+
+###GetFolderByPath.ps1
 
 This script is able to run independently.
 
 Script that returns an Outlook folder based on the known Outlook folder path.
+
+Example:
+
+    PS D:\> $session = new-Object -comobject Outlook.Application
+    PS D:\> $folder = .\GetFolderByPath.ps1 -outlookFolderPath "\\Public Folders\All Public Folders\Group Mail" -session $session
 
 ###CopyAllAttachments.ps1
 
@@ -31,3 +43,9 @@ This script is able to run independently.
 
 Script that iterates through every email in an Outlook folder. If an email 
 contains attachments, copy them to an existing directory.
+
+Example:
+The Outlook Folder was retrieved from GetFolderByPath.ps1
+
+    PS D:\> .\CopyAllAttachments.ps1 -outlookFolder $folder -destination D:\group_attachments\
+    > Writing file 3_3_2013_12_26_40_22_5140.sig to D:\group_attachments\
