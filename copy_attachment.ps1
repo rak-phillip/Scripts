@@ -51,10 +51,10 @@ if($session -eq 0){
     #Start a new Outlook Session
     $session = New-Object -comobject Outlook.Application
 
-    $session.Version
+    $version = $session.Version
 
-    if (!($session.Version -like "12.*" -or $session.Version -like "14.*")){
-        write-host "Requires 2007 or 2010"
+    if (!($version.Substring(0, 2) -ge 12)) {
+        write-host "Requires Outlook Version 2007 or greater"
         return
     }
 }
