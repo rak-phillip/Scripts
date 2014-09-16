@@ -83,3 +83,4 @@ $service.UseDefaultCredentials = $true
 $service.AutodiscoverUrl($Account);
 
 CopyAllAttachments $FolderId $Destination $ArchiveDestination
+

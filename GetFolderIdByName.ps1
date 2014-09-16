@@ -23,7 +23,7 @@ if($DisplayName -eq "")
 #use the default web services directory if one is not specified
 if($WebServicesDllLocation -eq "")
 {
-    $WebServicesDllLocation = “C:\Program Files\Microsoft\Exchange\Web Services\2.0\Microsoft.Exchange.WebServices.dll”
+    $WebServicesDllLocation = "C:\Program Files\Microsoft\Exchange\Web Services\2.0\Microsoft.Exchange.WebServices.dll"
 }
 
 #default to folder count to 100 if no value was entered
@@ -41,7 +41,7 @@ Function GetFolderIdByName([string]$DisplayName, $FolderCount)
     $rootFolder = $rootFolder::Bind($service, $searchFolder)
 
     foreach($folder in $rootFolder.FindFolders($folderView))
-    {
+    {    
         if ($folder.DisplayName -eq $DisplayName)
         {
             $folderId = $folder.Id
@@ -72,3 +72,4 @@ $service.UseDefaultCredentials = $true
 $service.AutodiscoverUrl($Account);
 
 GetFolderIdByName $DisplayName $FolderCount
+
