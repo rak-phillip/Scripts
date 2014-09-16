@@ -23,7 +23,7 @@ if($Item -eq "")
 #use the default web services directory if one is not specified
 if($WebServicesDllLocation -eq "")
 {
-    $WebServicesDllLocation = “C:\Program Files\Microsoft\Exchange\Web Services\2.0\Microsoft.Exchange.WebServices.dll”
+    $WebServicesDllLocation = "C:\Program Files\Microsoft\Exchange\Web Services\2.0\Microsoft.Exchange.WebServices.dll"
 }
 
 #import the Exchange Web Services module
@@ -37,6 +37,4 @@ $service = new-object Microsoft.Exchange.WebServices.Data.ExchangeService($versi
 $service.UseDefaultCredentials = $true
 $service.AutodiscoverUrl($Account);
 
-$archiveDestination = .\GetFolderIdByName.ps1 $Account $DisplayName
-
-$Item.Move($archiveDestination)
+$Item.Move($DisplayName)
