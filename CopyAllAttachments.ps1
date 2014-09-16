@@ -4,7 +4,7 @@
 #  [integer] FolderCount - the number of folders to search (deafault = 100)
 #  [string] WebServicesDllLocation - the location of the Exchange Web Services
 #  dll (default = "C:\Program Files\Microsoft\Exchange\Web Services\2.0\Microsoft.Exchange.WebServices.dll"
-Param([string]$Account="", $ArchiveDestination="", $Destination="", $FolderCount=0, $FolderId="", [string]$WebServicesDllLocation="")
+Param([string]$Account="", $Destination="", $FolderCount=0, $FolderId="", [string]$WebServicesDllLocation="")
 
 #if an account was not entered, cancel the script
 if($Account -eq "")
@@ -28,7 +28,7 @@ if($FolderId -eq "")
 #use the default web services directory if one is not specified
 if($WebServicesDllLocation -eq "")
 {
-    $WebServicesDllLocation = “C:\Program Files\Microsoft\Exchange\Web Services\2.0\Microsoft.Exchange.WebServices.dll”
+    $WebServicesDllLocation = "C:\Program Files\Microsoft\Exchange\Web Services\2.0\Microsoft.Exchange.WebServices.dll"
 }
 
 #default to folder count to 100 if no value was entered
@@ -45,10 +45,10 @@ Function CopyAllAttachments($FolderId, $Destination, $ArchiveDestination)
 
     $item = [Microsoft.Exchange.WebServices.Data.Item]
 
+    $itemArray = @()
+
     foreach($item in $rootFolder.FindItems($view))
     {
-        $copy = $false
-        
         if($item.HasAttachments)
         {
             $item.Load()
@@ -62,19 +62,13 @@ Function CopyAllAttachments($FolderId, $Destination, $ArchiveDestination)
                     $fileAttachment = [Microsoft.Exchange.WebServices.Data.FileAttachment]
                     $fileAttachment = $attachment
                     $fileAttachment.Load($Destination+"\"+$fileAttachment.Name)
-                    
-                    write-host $attachment.Name
-                    
-                    $copy = $true
+                    $itemArray += $item
                 }
-            }
-            
-            if(($ArchiveDestination -ne "") -and ($copy -eq $true))
-            {
-                .\MoveItemToPublicFolder.ps1 $Account $ArchiveDestination $item
             }
         }
     }
+    
+    return $itemArray
 }
 
 #import the Exchange Web Services module
