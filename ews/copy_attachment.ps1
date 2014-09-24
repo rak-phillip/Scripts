@@ -73,6 +73,12 @@ else
     $itemArray = . $subscriptName $Account $Destination $FolderCount $FolderId $WebServicesDllLocation
 }
 
+#end the script if no archive destination is specified
+if ($ArchiveDisplayName -eq "")
+{
+    return
+}
+
 #get the folder id for the Archive Public Folder
 $subScriptName = "GetFolderIdByName.ps1"
 $subScriptPath = Join-Path (GetScriptDirectory) $subScriptname

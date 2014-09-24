@@ -68,7 +68,7 @@ Function CopyAllAttachments($FolderId, $Destination, $ArchiveDestination)
         }
     }
     
-    return $itemArray
+    return , $itemArray
 }
 
 #import the Exchange Web Services module
